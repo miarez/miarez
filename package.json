@@ -1,0 +1,16 @@
+{
+    "name": "github-stats-fetcher",
+    "version": "1.0.0",
+    "description": "A script to fetch GitHub stats and save them as an SVG file.",
+    "main": "fetch-github-stats.js",
+    "scripts": {
+      "start": "node fetch-github-stats.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "https": "^1.0.0",
+      "fs": "^0.0.1-security"
+    }
+  }
+  
