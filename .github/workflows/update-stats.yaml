@@ -5,7 +5,7 @@ on:
     - cron: '0 4 * * *'  # Runs at 04:00 UTC every day
   push:
     branches:
-      - main  # Adjust if your default branch is different
+      - main
   workflow_dispatch:
 
 jobs:
@@ -14,18 +14,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3 
         with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
+          node-version: '20'
 
       - name: Run fetch script
-        run: node fetch-github-stats.js
+        run: |
+          npm install
+          node fetch-github-stats.js
 
       - name: Commit and push changes
         run: |
@@ -34,3 +33,5 @@ jobs:
           git add general_stats.svg
           git commit -m "Update GitHub stats SVG"
           git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
