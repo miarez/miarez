@@ -43,6 +43,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add general_stats.svg
+          git add language_stats.svg          
           git commit -m "Update GitHub stats SVG"
           git push https://PAT@github.com/miarez/miarez.git HEAD:main
         env:
