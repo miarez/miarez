@@ -1,36 +1,36 @@
-name: Update GitHub stats
+name: Update GitHub Stats
 
 on:
   schedule:
-  - cron: '0 4 * * *'
+    - cron: '0 4 * * *'  # Runs at 04:00 UTC every day
+  push:
+    branches:
+      - main  # Adjust if your default branch is different
   workflow_dispatch:
 
-concurrency:
-  group: stats
-
 jobs:
-  update:
+  update-stats:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Install HTTPX
-      run: pip install --upgrade httpx
+      - name: Install dependencies
+        run: npm install
 
-    - name: Download stats
-      run: python download_stats.py
+      - name: Run fetch script
+        run: node fetch-github-stats.js
 
-    - name: Configure Git for GitHub Actions bot
-      run: |
-        git config --local user.name 'github-actions[bot]'
-        git config --local user.email 'github-actions[bot]@users.noreply.github.com'
-
-    - name: Commit if stats have changed
-      run: |
-        git add --all && git commit -m "Update stats" && git push
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add general_stats.svg
+          git commit -m "Update GitHub stats SVG"
+          git push origin main
