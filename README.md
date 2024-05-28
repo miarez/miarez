@@ -18,6 +18,13 @@ I'm slowly building out my own little world at  [stas.website](https://stas.webs
 - 🧠 Index & Organize All Human Knowledge
     - use language & database to make learning fun
 
+## 💼 need some help? I offer:
+- 💻 System Design Architecture & Implementation
+- 🧑‍💼Employee Recruitment & Interview Screening
+- 📈 Growth Hacking through AB Testing, Retargeting, Digital Marketing Campaigns
+- 📊 Data Modeling, Analysis & Visualization
+[Contact me at hi@stas.website](mailto:hi@stas.website)
+  
 
 ## 📊 real-time stats
 
