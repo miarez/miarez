@@ -15,36 +15,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Step 2: Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # Step 3: Log Node.js version for debugging
       - name: Log Node.js version
         run: node -v
 
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Step 5: Run the fetch script to generate SVG files
       - name: Run fetch script
         run: |
           node fetch-github-stats.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check SVG content
-        run: cat general_stats.svg
+      # Step 6: Debugging: Check if SVG files were generated
+      - name: List files in the repository
+        run: ls -la
 
+      - name: Check if SVG files exist
+        run: |
+          if [[ -f general_stats.svg ]]; then echo "general_stats.svg exists"; else echo "general_stats.svg not found"; fi
+          if [[ -f language_stats.svg ]]; then echo "language_stats.svg exists"; else echo "language_stats.svg not found"; fi
+
+      # Step 7: Commit and push the changes
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add general_stats.svg
-          git add language_stats.svg          
-          git commit -m "Update GitHub stats SVG"
+
+          # Force add the SVG files in case they are untracked
+          git add -f general_stats.svg language_stats.svg
+
+          # Commit the changes
+          git commit -m "Update GitHub stats SVG" || echo "No changes to commit"
+
+          # Push the changes
           git push https://PAT@github.com/miarez/miarez.git HEAD:main
         env:
           PAT: ${{ secrets.PAT }}
